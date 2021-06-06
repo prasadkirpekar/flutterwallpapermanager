@@ -21,7 +21,10 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     initPlatformState();
+    //Set Wallpaper
     setWallpaper();
+    //Clear Wallpaper
+    WallpaperManager.clearWallpaper();
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
@@ -49,7 +52,8 @@ class _MyAppState extends State<MyApp> {
   Future<void> setWallpaper() async {
     try {
       String url = "https://source.unsplash.com/random";
-      int location = 3; // or location = WallpaperManager.LOCK_SCREEN;
+      int location = WallpaperManager
+          .BOTH_SCREEN; // or location = WallpaperManager.LOCK_SCREEN;
       var file = await DefaultCacheManager().getSingleFile(url);
       final bool result =
           await WallpaperManager.setWallpaperFromFile(file.path, location);

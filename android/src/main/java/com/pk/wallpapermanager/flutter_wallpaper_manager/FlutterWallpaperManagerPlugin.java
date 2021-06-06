@@ -2,11 +2,30 @@ package com.pk.wallpapermanager.flutter_wallpaper_manager;
 
 import androidx.annotation.NonNull;
 
+
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.app.WallpaperManager;
+
+import android.content.Context;
+import android.content.Intent;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Rect;
+import android.os.Build;
+import android.os.Environment;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Array;
+
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
+
 
 /** FlutterWallpaperManagerPlugin */
 public class FlutterWallpaperManagerPlugin implements FlutterPlugin, MethodCallHandler {
@@ -15,9 +34,11 @@ public class FlutterWallpaperManagerPlugin implements FlutterPlugin, MethodCallH
   /// This local reference serves to register the plugin with the Flutter Engine and unregister it
   /// when the Flutter Engine is detached from the Activity
   private MethodChannel channel;
+  private Context context;
 
   @Override
   public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
+    context = flutterPluginBinding.getApplicationContext();
     channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "flutter_wallpaper_manager");
     channel.setMethodCallHandler(this);
   }
@@ -29,6 +50,9 @@ public class FlutterWallpaperManagerPlugin implements FlutterPlugin, MethodCallH
     }
     else if(call.method.equals("setWallpaperFromFile")){
       result.success(setWallpaperFromFile((String) call.argument("filePath"), (int) call.argument("wallpaperLocation")));
+    }
+    else if(call.method.equals("clearWallpaper")){
+      result.success(clearWallpaper());
     }
     else {
       result.notImplemented();
@@ -57,4 +81,17 @@ public class FlutterWallpaperManagerPlugin implements FlutterPlugin, MethodCallH
       }
       return result;
   }
+
+  @SuppressLint("MissingPermission")
+  private boolean clearWallpaper() {
+      Boolean result = false;
+      WallpaperManager wm = WallpaperManager.getInstance(context);
+      try {
+          wm.clear();
+          result = true;
+      } catch (IOException e) {
+      }
+      return result;
+  }
+
 }
