@@ -1,6 +1,6 @@
 name: flutter_wallpaper_manager
-description: Wallpaper manager flutter package for Android made in dart
-version: 0.0.1
+description: Flutter wallpaper manager plugin, helps you setup wallpaper on android devices. Support home screen, lock screen and both screen wallpaper mode.
+version: 0.0.2
 homepage: https://github.com/prasadkirpekar/wallpapermanager
 
 environment:
