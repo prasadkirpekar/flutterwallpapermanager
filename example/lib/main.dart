@@ -16,20 +16,17 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
-
+  String __heightWidth = "Unknown";
   @override
   void initState() {
     super.initState();
-    initPlatformState();
-    //Set Wallpaper
-    setWallpaper();
-    //Clear Wallpaper
-    WallpaperManager.clearWallpaper();
+    initAppState();
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
+  Future<void> initAppState() async {
     String platformVersion;
+    String _heightWidth;
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
     try {
@@ -39,12 +36,23 @@ class _MyAppState extends State<MyApp> {
       platformVersion = 'Failed to get platform version.';
     }
 
+    try {
+      int height = await WallpaperManager.getDesiredMinimumHeight();
+      int width = await WallpaperManager.getDesiredMinimumWidth();
+      _heightWidth =
+          "Width = " + width.toString() + " Height = " + height.toString();
+    } on PlatformException {
+      platformVersion = 'Failed to get platform version.';
+      _heightWidth = "Failed to get Height and Width";
+    }
+
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
     // setState to update our non-existent appearance.
     if (!mounted) return;
 
     setState(() {
+      __heightWidth = _heightWidth;
       _platformVersion = platformVersion;
     });
   }
@@ -69,8 +77,29 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: Text('Running on: $_platformVersion\n'),
-        ),
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text('Running on: $_platformVersion\n'),
+            SizedBox(
+              height: 10,
+            ),
+            Text('$__heightWidth\n'),
+            SizedBox(
+              height: 10,
+            ),
+            TextButton(
+                onPressed: () => {setWallpaper()},
+                child: Text("Set Random Wallpaper")),
+            SizedBox(
+              height: 10,
+            ),
+            TextButton(
+                onPressed: () => {(WallpaperManager.clearWallpaper())},
+                child: Text("Clear Wallpaper"))
+          ],
+        )),
       ),
     );
   }

@@ -1,15 +1,23 @@
-# flutter_wallpaper_manager
+# flutter_wallpaper_manager_example
 
-A new flutter plugin project.
+A flutter plugin to set wallpaper on your android device. It support Home Screen, Lock Screen and Both Screen mode
 
-## Getting Started
+## How to use flutter wallpaper manager?
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+Simply install latest version of flutter_wallpaper_manager and use the following code to set the wallpaper
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```
+int location = WallpaperManager.BOTH_SCREEN; //can be Home/Lock Screen
+bool result = await WallpaperManager.setWallpaperFromFile(path, location); //provide image path
 
+```
+
+You can clear the wallpaper by using clear() of WallpaperManager class
+
+```
+bool result = await WallpaperManager.clear(); //returns true/false
+
+```
+More features are coming to this plugin. Meanwhile you can support the development by donating tiny amount. It will be really appreciated.
+
+- [Support Development](https://paypal.me/prasadkirpekar)

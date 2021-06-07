@@ -54,6 +54,12 @@ public class FlutterWallpaperManagerPlugin implements FlutterPlugin, MethodCallH
     else if(call.method.equals("clearWallpaper")){
       result.success(clearWallpaper());
     }
+    else if(call.method.equals("getDesiredMinimumHeight")){
+      result.success(getDesiredMinimumHeight());
+    }
+    else if(call.method.equals("getDesiredMinimumWidth")){
+      result.success(getDesiredMinimumWidth());
+    }
     else {
       result.notImplemented();
     }
@@ -93,5 +99,19 @@ public class FlutterWallpaperManagerPlugin implements FlutterPlugin, MethodCallH
       }
       return result;
   }
+
+  @SuppressLint("MissingPermission")
+  private int getDesiredMinimumHeight() {
+    WallpaperManager wm = WallpaperManager.getInstance(context);
+    return wm.getDesiredMinimumHeight();
+  }
+
+  @SuppressLint("MissingPermission")
+  private int getDesiredMinimumWidth() {
+    WallpaperManager wm = WallpaperManager.getInstance(context);
+    return wm.getDesiredMinimumWidth();
+  }
+
+  
 
 }

@@ -27,4 +27,14 @@ class WallpaperManager {
     final bool result = await _channel.invokeMethod('clearWallpaper');
     return result;
   }
+
+  static Future<int> getDesiredMinimumWidth() async {
+    final int result = await _channel.invokeMethod('getDesiredMinimumWidth');
+    return result;
+  }
+
+  static Future<int> getDesiredMinimumHeight() async {
+    final int result = await _channel.invokeMethod('getDesiredMinimumHeight');
+    return result;
+  }
 }
