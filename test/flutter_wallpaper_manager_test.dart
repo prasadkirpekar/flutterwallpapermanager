@@ -18,6 +18,6 @@ void main() {
   });
 
   test('getPlatformVersion', () async {
-    expect(await FlutterWallpaperManager.platformVersion, '42');
+    expect(await WallpaperManager.platformVersion, '42');
   });
 }

@@ -1,4 +1,4 @@
-# flutter_wallpaper_manager_example
+# flutter_wallpaper_manager
 
 A flutter plugin to set wallpaper on your android device. It support Home Screen, Lock Screen and Both Screen mode
 
